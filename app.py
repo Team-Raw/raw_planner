@@ -16,6 +16,10 @@ def service():
 def search():
     return render_template('search.html')
 
+# @app.route('/search',methods=('GET', 'POST'))
+# def search():
+#     return render_template('page01.html')
+
 @app.route('/result',methods=('GET', 'POST'))
 def result():
     if request.method == 'POST':

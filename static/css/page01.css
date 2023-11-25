@@ -17,7 +17,7 @@ li {
 }
 
 
-/* page01 */
+/* 검색창 페이지 */
 
 .wrap {
   width: 1500px; height: 700px;
@@ -129,7 +129,7 @@ main {
 }
 
 .typewriter {
-  width: 270px;
+  width: 290px;
   font-weight: 500; font-size: 50px;
   color: #FF5E17;
   overflow: hidden; 
@@ -144,7 +144,7 @@ main {
 /* The typing effect */
 @keyframes typing {
   from { width: 0 }
-  to { width: 30% }
+  to { width: 40% }
 }
 
 /* The typewriter cursor effect */

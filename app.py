@@ -16,9 +16,13 @@ def service():
 def search():
     return render_template('search.html')
 
-# @app.route('/search',methods=('GET', 'POST'))
-# def search():
-#     return render_template('page01.html')
+@app.route('/pageone',methods=('GET', 'POST'))
+def pageone():
+    return render_template('page01.html')
+
+@app.route('/pagetwo',methods=('GET', 'POST'))
+def pagetwo():
+    return render_template('page02.html')
 
 @app.route('/result',methods=('GET', 'POST'))
 def result():
@@ -29,7 +33,7 @@ def result():
         result = searchRelated.getresults(hintKeywords)
         print(result)
         return render_template('search.html', html=result.to_html())
-    return render_template('search.html')
+    return render_template('search.html') 
 
 
 # API

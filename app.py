@@ -21,12 +21,9 @@ def search():
 @app.route('/search_result',methods=('GET', 'POST'))
 def result():
     if request.method == 'POST':
-        related_data = convert.related_convert(request)
-        print('##################################################################')
-        print(type(related_data))
-        print(related_data)
-        trend_data = convert.trend_convert()
-        return render_template('search_result.html', related_data=related_data, trend_data=f"<img src='data:image/png;base64,{trend_data}'/>")
+        related_data = convert.related_convert(request.form['input'])
+        trend_data = convert.trend_convert(request.form['input'])
+        return render_template('search_result.html', related_data=related_data, trend_data=trend_data)
     return render_template('search_result.html')
 
 #########################################################TEST CODE##################################################################

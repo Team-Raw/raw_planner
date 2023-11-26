@@ -6,13 +6,11 @@ import plotly.express as px
 import seaborn as sns
 
 import urllib.request
-import datetime
+import base64
 import json
-import glob
-import sys
-import os
-
 import warnings
+from io import BytesIO
+
 warnings.filterwarnings(action='ignore')
 
 plt.rcParams['axes.unicode_minus'] = False
@@ -38,6 +36,7 @@ class NaverDataLabOpenAPI():
         self.client_secret = client_secret
         self.keywordGroups = []
         self.url = "https://openapi.naver.com/v1/datalab/search"
+        plt.rc('font', family='NanumGothic') 
 
     def add_keyword_groups(self, group_dict):
         """
@@ -51,6 +50,69 @@ class NaverDataLabOpenAPI():
         
         self.keywordGroups.append(keyword_gorup)
         print(f">>> Num of keywordGroups: {len(self.keywordGroups)}")
+
+    # 연령별 그래프
+    def get_result_age(self, startDate, endDate, timeUnit, device, ages, gender):
+
+        age_conv={'1':'0∼12세','2':'13∼18세','3':'19∼24세','4':'25∼29세','5':'30∼34세',
+            '6':'35∼39세','7':'40∼44세','8':'45∼49세','9':'50∼54세','10':'55∼59세','11':'60세 이상'}
+        
+        response_results_all = pd.DataFrame()
+        
+        for age in ages:
+            body_dict={} #검색 정보를 저장할 변수
+            body_dict['startDate']=startDate
+            body_dict['endDate']=endDate
+            body_dict['timeUnit']=timeUnit
+            body_dict['keywordGroups']=self.keywordGroups
+            body_dict['device']=device
+            body_dict['gender']=gender
+            body_dict['ages']=[age]
+
+            body=str(body_dict).replace("'",'"') # ' 문자로는 에러가 발생해서 " 로 변환
+
+            request = urllib.request.Request(self.url)
+            request.add_header("X-Naver-Client-Id",self.client_id)
+            request.add_header("X-Naver-Client-Secret",self.client_secret)
+            request.add_header("Content-Type","application/json")
+            response = urllib.request.urlopen(request, data=body.encode("utf-8"))
+            rescode = response.getcode()
+            if(rescode==200):
+                response_body = response.read()
+                response_json = json.loads(response_body)
+            else:
+                print("Error Code:" + rescode)
+
+            # 결과데이터중 'data' 와 'title'만 따로 DataFrame으로 저장
+            response_results = pd.DataFrame()
+            for data in response_json['results']:
+                result=pd.DataFrame(data['data'])
+                result['title']=data['title']
+                result['age']=age # 연령대 정보를 추가
+
+                response_results = pd.concat([response_results,result])
+            
+            response_results_all = pd.concat([response_results_all,response_results])
+            
+        #title별로 그래프를 그리기 위한부분
+        titles=response_results['title'].unique() 
+
+        graph_data = {}
+        for age in ages:
+            buf = BytesIO()
+            plt.figure(figsize=(4,4))
+            for title in titles:
+                data=response_results_all.loc[(response_results_all['title']==title) 
+                            & (response_results_all['age']==age),:]
+                plt.plot(data['period'],data['ratio'],label=title)
+                plt.xticks(rotation=90)
+                plt.legend()
+            plt.title(str(age_conv[age]))
+            plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.3)  # 잘 맞게 조절
+            plt.savefig(buf, format="png")
+            graph_data[age] = base64.b64encode(buf.getbuffer()).decode("ascii")
+        
+        return graph_data
         
     def get_data(self, startDate, endDate, timeUnit, device, ages, gender):
         """

@@ -40,6 +40,9 @@
       </ul>
       <div class="search_result">
         <h2>검색어 분석 결과</h2>
+        {% for age, graph_image in trend_data.items() %}
+          <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ age }}">
+        {% endfor %}
         <div class="graphs">
           <div id="result_graph">{{ trend_data|safe }}</div>
           <div id="result_graph">{{ trend_data|safe }}</div>

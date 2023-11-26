@@ -15,8 +15,7 @@ $('#head_search_btn').click(function(){
       alert('ajax 통신 실패');		
     },
     complete: function(){
-      console.log('asdgawe4rg');
-      
+      console.log('api 호출 완료');
     }
   });
 });

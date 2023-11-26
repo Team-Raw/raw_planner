@@ -36,7 +36,20 @@ class NaverDataLabOpenAPI():
         self.client_secret = client_secret
         self.keywordGroups = []
         self.url = "https://openapi.naver.com/v1/datalab/search"
-        plt.rc('font', family='NanumGothic') 
+        plt.rc('font', family='NanumGothic')
+
+    def request_api(self, body):
+        request = urllib.request.Request(self.url)
+        request.add_header("X-Naver-Client-Id",self.client_id)
+        request.add_header("X-Naver-Client-Secret",self.client_secret)
+        request.add_header("Content-Type","application/json")
+        response = urllib.request.urlopen(request, data=body.encode("utf-8"))
+        rescode = response.getcode()
+        if(rescode==200):
+            response_body = response.read()
+            return json.loads(response_body)
+        else:
+            print("Error Code:" + rescode)
 
     def add_keyword_groups(self, group_dict):
         """
@@ -71,17 +84,7 @@ class NaverDataLabOpenAPI():
 
             body=str(body_dict).replace("'",'"') # ' 문자로는 에러가 발생해서 " 로 변환
 
-            request = urllib.request.Request(self.url)
-            request.add_header("X-Naver-Client-Id",self.client_id)
-            request.add_header("X-Naver-Client-Secret",self.client_secret)
-            request.add_header("Content-Type","application/json")
-            response = urllib.request.urlopen(request, data=body.encode("utf-8"))
-            rescode = response.getcode()
-            if(rescode==200):
-                response_body = response.read()
-                response_json = json.loads(response_body)
-            else:
-                print("Error Code:" + rescode)
+            response_json = self.request_api(body)
 
             # 결과데이터중 'data' 와 'title'만 따로 DataFrame으로 저장
             response_results = pd.DataFrame()
@@ -106,11 +109,122 @@ class NaverDataLabOpenAPI():
                             & (response_results_all['age']==age),:]
                 plt.plot(data['period'],data['ratio'],label=title)
                 plt.xticks(rotation=90)
+                plt.ylabel("검색량")
                 plt.legend()
             plt.title(str(age_conv[age]))
-            plt.subplots_adjust(left=0.1, right=0.9, top=0.9, bottom=0.3)  # 잘 맞게 조절
+            plt.subplots_adjust(left=0.2, right=0.9, top=0.9, bottom=0.3)  # 잘 맞게 조절
             plt.savefig(buf, format="png")
             graph_data[age] = base64.b64encode(buf.getbuffer()).decode("ascii")
+        
+        return graph_data
+    
+    # 기기별 그래프
+    def get_result_device(self, startDate, endDate, timeUnit, device, ages, gender):
+        devices = ['pc', 'mo']
+        
+        response_results_all = pd.DataFrame()
+        
+        for device in devices:
+            body_dict={} #검색 정보를 저장할 변수
+            body_dict['startDate']=startDate
+            body_dict['endDate']=endDate
+            body_dict['timeUnit']=timeUnit
+            body_dict['keywordGroups']=self.keywordGroups
+            body_dict['device']=device
+            body_dict['gender']=gender
+            body_dict['ages']=ages
+
+            body=str(body_dict).replace("'",'"') # ' 문자로는 에러가 발생해서 " 로 변환
+
+            response_json = self.request_api(body)
+
+            # 결과데이터중 'data' 와 'title'만 따로 DataFrame으로 저장
+            response_results = pd.DataFrame()
+            for data in response_json['results']:
+                result=pd.DataFrame(data['data'])
+                result['title']=data['title']
+                result['device']=device # 기기 정보를 추가
+
+                response_results = pd.concat([response_results,result])
+            
+            response_results_all = pd.concat([response_results_all,response_results])
+            
+        #title별로 그래프를 그리기 위한부분
+        titles=response_results['title'].unique() 
+
+        graph_data = {}
+        for device in devices:
+            buf = BytesIO()
+            plt.figure(figsize=(4,4))
+            for title in titles:
+                data=response_results_all.loc[(response_results_all['title']==title) 
+                            & (response_results_all['device']==device),:]
+                plt.plot(data['period'],data['ratio'],label=title)
+                plt.xticks(rotation=90)
+                plt.ylabel("검색량")
+                plt.legend()
+            if str(device) == 'pc':
+                plt.title('PC')
+            elif str(device) == 'mo':
+                plt.title('MOBILE')
+            plt.subplots_adjust(left=0.2, right=0.9, top=0.9, bottom=0.3)  # 잘 맞게 조절
+            plt.savefig(buf, format="png")
+            graph_data[device] = base64.b64encode(buf.getbuffer()).decode("ascii")
+        
+        return graph_data
+    
+    # 성별(남녀) 그래프
+    def get_result_gender(self, startDate, endDate, timeUnit, device, ages, gender):
+        genders = ['m', 'f']
+        
+        response_results_all = pd.DataFrame()
+        
+        for gender in genders:
+            body_dict={} #검색 정보를 저장할 변수
+            body_dict['startDate']=startDate
+            body_dict['endDate']=endDate
+            body_dict['timeUnit']=timeUnit
+            body_dict['keywordGroups']=self.keywordGroups
+            body_dict['device']=device
+            body_dict['gender']=gender
+            body_dict['ages']=ages
+
+            body=str(body_dict).replace("'",'"') # ' 문자로는 에러가 발생해서 " 로 변환
+
+            response_json = self.request_api(body)
+
+            # 결과데이터중 'data' 와 'title'만 따로 DataFrame으로 저장
+            response_results = pd.DataFrame()
+            for data in response_json['results']:
+                result=pd.DataFrame(data['data'])
+                result['title']=data['title']
+                result['gender']=gender # 기기 정보를 추가
+
+                response_results = pd.concat([response_results,result])
+            
+            response_results_all = pd.concat([response_results_all,response_results])
+            
+        #title별로 그래프를 그리기 위한부분
+        titles=response_results['title'].unique() 
+
+        graph_data = {}
+        for gender in genders:
+            buf = BytesIO()
+            plt.figure(figsize=(4,4))
+            for title in titles:
+                data=response_results_all.loc[(response_results_all['title']==title) 
+                            & (response_results_all['gender']==gender),:]
+                plt.plot(data['period'],data['ratio'],label=title)
+                plt.xticks(rotation=90)
+                plt.ylabel("검색량")
+                plt.legend()
+            if str(gender) == 'm':
+                plt.title('MALE')
+            elif str(gender) == 'f':
+                plt.title('FEMALE')
+            plt.subplots_adjust(left=0.2, right=0.9, top=0.9, bottom=0.3)  # 잘 맞게 조절
+            plt.savefig(buf, format="png")
+            graph_data[gender] = base64.b64encode(buf.getbuffer()).decode("ascii")
         
         return graph_data
         

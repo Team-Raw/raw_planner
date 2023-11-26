@@ -21,25 +21,16 @@ def search():
 @app.route('/search_result',methods=('GET', 'POST'))
 def result():
     if request.method == 'POST':
-        related_data = convert.related_convert(request.form['input'])
-        trend_data = convert.trend_convert(request.form['input'])
-        return render_template('search_result.html', related_data=related_data, trend_data=trend_data)
+        monthlyPcQcCnt_dict, relKeyword_dict, monthlyMobileQcCnt_dict, mo_relKeyword_dict = convert.related_convert(request.form['input'])
+        age_graph_data, device_graph_data, gender_graph_data = convert.trend_convert(request.form['input'])
+        return render_template('search_result.html', monthlyPcQcCnt_dict=monthlyPcQcCnt_dict, 
+                                relKeyword_dict=relKeyword_dict, 
+                                monthlyMobileQcCnt_dict=monthlyMobileQcCnt_dict, 
+                                mo_relKeyword_dict=mo_relKeyword_dict,
+                                age_graph_data=age_graph_data, 
+                                device_graph_data=device_graph_data, 
+                                gender_graph_data=gender_graph_data)
     return render_template('search_result.html')
-
-#########################################################TEST CODE##################################################################
-
-from matplotlib import pyplot as plt
-import numpy as np
-
-@app.route('/test',methods=('GET', 'POST'))
-def test_render():
-    x = np.arange(1,10)
-    y = x*5
-
-    plt.plot(x,y)
-    plt.show()
-
-    return render_template('temp/test.html', result=result)
 
 if __name__=="__main__":
     app.run(debug=True)

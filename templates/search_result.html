@@ -158,16 +158,18 @@
         </div>
       </div>
       <div class="search_result">
-        <h2>검색어 분석 결과</h2>
-        <h3>연령대별 분석 결과</h3>
+        <h2>검색어 분석 결과</h2><br>
+        <h3><연령대별 분석 결과></h3>
         {% for age, graph_image in age_graph_data.items() %}
           <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ age }}">
         {% endfor %}
-        <h3>기기별 분석 결과</h3>
+        <br><br>
+        <h3><기기별 분석 결과></h3>
         {% for device, graph_image in device_graph_data.items() %}
           <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ device }}">
         {% endfor %}
-        <h3>성별(남녀) 분석 결과</h3>
+        <br><br>
+        <h3><성별(남녀) 분석 결과></h3>
         {% for device, graph_image in gender_graph_data.items() %}
           <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ gender }}">
         {% endfor %}

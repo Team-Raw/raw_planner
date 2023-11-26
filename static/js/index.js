@@ -1,13 +1,14 @@
-console.log('test');
-
-$('#head_search_btn').click(function(){
+console.log("conn")
+$('#search_btn').click(function(){
+  console.log('ok')
   $.ajax({
-    url: '/result',
+    url: '/search_result',
     data: {
-      input : $('#header_search_data').val()
+      input : $('#search_data').val()
     },
     type: 'post',
     success: function(result){
+      document.body.innerHTML = '';
       document.write(result)
       // $('#output1').text(result);
     },

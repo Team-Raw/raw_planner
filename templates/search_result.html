@@ -29,7 +29,6 @@
       <div class="graphs_result">
         <h2>검색어 순위</h2>
         <div class="graph_result">
-          <div id="result_graph">{{ trend_data|safe }}</div>
           <ul>
             <li>{{ related_data['1']|safe }}</li>
             <li>{{ related_data['2']|safe }}</li>
@@ -49,12 +48,12 @@
         {% for age, graph_image in trend_data.items() %}
           <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ age }}">
         {% endfor %}
-        <div class="graphs">
+        <!-- <div class="graphs">
           <div id="result_graph">{{ trend_data|safe }}</div>
           <div id="result_graph">{{ trend_data|safe }}</div>
           <div id="result_graph">{{ trend_data|safe }}</div>
           <div id="result_graph">{{ trend_data|safe }}</div>
-        </div>
+        </div> -->
       </div>
     </main>
 

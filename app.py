@@ -1,7 +1,6 @@
 from flask import Flask, render_template, request
 from api import searchTrend, searchRelated
 from controllers import convert
-from define import const
 
 app = Flask(__name__)
 
@@ -10,32 +9,26 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-@app.route('/service',methods=('GET', 'POST'))
-def service():
-    return render_template('service.html')
+# 구현필요
+# @app.route('/service',methods=('GET', 'POST'))
+# def service():
+#     return render_template('service.html')
 
 @app.route('/search',methods=('GET', 'POST'))
 def search():
     return render_template('search.html')
 
-@app.route('/pageone',methods=('GET', 'POST'))
-def pageone():
-    return render_template('page01.html')
-
-@app.route('/pagetwo',methods=('GET', 'POST'))
-def pagetwo():
-    return render_template('page02.html')
-
-@app.route('/result',methods=('GET', 'POST'))
+@app.route('/search_result',methods=('GET', 'POST'))
 def result():
     if request.method == 'POST':
-        hintKeywords=[]
-        input_value = request.form['input']
-        hintKeywords.append(input_value)
-        result = searchRelated.getresults(hintKeywords)
-        print(result)
-        return render_template('search.html', html=result.to_html())
-    return render_template('search.html') 
+        # hintKeywords=[]
+        # input_value = request.form['input']
+        # hintKeywords.append(input_value)
+        # result = searchRelated.getresults(hintKeywords)
+        # print(result)
+        data = convert.trend_convert()
+        return render_template('search_result.html', result=f"<img src='data:image/png;base64,{data}'/>")
+    return render_template('search_result.html')
 
 # API
 @app.route('/search/trend',methods=('GET', 'POST'))
@@ -50,10 +43,10 @@ def search_relative():
     return render_template('search.html', result=result)
 
 
-from matplotlib import pyplot as plt
-import numpy as np
 
 #########################################################TEST CODE##################################################################
+from matplotlib import pyplot as plt
+import numpy as np
 
 @app.route('/test',methods=('GET', 'POST'))
 def test_render():
@@ -63,13 +56,13 @@ def test_render():
     plt.plot(x,y)
     plt.show()
 
-    return render_template('test.html', result=result)
+    return render_template('temp/test.html', result=result)
 
 @app.route('/trend_test',methods=('GET', 'POST'))
 def index_test():
     data = convert.trend_convert()
 
-    return render_template('index_test.html', result=f"<img src='data:image/png;base64,{data}'/>")
+    return render_template('temp/index_test.html', result=f"<img src='data:image/png;base64,{data}'/>")
 
 
 if __name__=="__main__":

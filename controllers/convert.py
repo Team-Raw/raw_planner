@@ -1,17 +1,12 @@
 from io import BytesIO
-import base64
 import pandas as pd
 
 from define import const
 from api import searchTrend, searchRelated
 
-def trend_convert():
+def trend_convert(input_value):
     keyword_group_set = {
-        'keyword_group_1': {'groupName': "애플", 'keywords': ["애플"]},
-        'keyword_group_2': {'groupName': "아마존", 'keywords': ["아마존"]},
-        # 'keyword_group_3': {'groupName': "구글", 'keywords': ["구글"]},
-        # 'keyword_group_4': {'groupName': "테슬라", 'keywords': ["테슬라"]},
-        # 'keyword_group_5': {'groupName': "페이스북", 'keywords': ["페이스북"]}
+        'keyword_group_1': {'groupName': input_value, 'keywords': [input_value]},
     }
 
     # API 인증 정보 설정
@@ -21,33 +16,31 @@ def trend_convert():
     # 요청 파라미터 설정
     startDate = "2023-01-01"
     endDate = "2023-11-25"
-    timeUnit = 'date'
+    timeUnit = 'month'
     device = ''
-    ages = []
+    ages = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']
     gender = ''
 
     # 데이터 프레임 정의
     search_trend_api = searchTrend.NaverDataLabOpenAPI(client_id=client_id, client_secret=client_secret)
 
     search_trend_api.add_keyword_groups(keyword_group_set['keyword_group_1'])
-    search_trend_api.add_keyword_groups(keyword_group_set['keyword_group_2'])
-    # search_trend_api.add_keyword_groups(keyword_group_set['keyword_group_3'])
-    # search_trend_api.add_keyword_groups(keyword_group_set['keyword_group_4'])
-    # search_trend_api.add_keyword_groups(keyword_group_set['keyword_group_5'])
 
-    df = search_trend_api.get_data(startDate, endDate, timeUnit, device, ages, gender)
-    print(df.head())
-    fig_1 = search_trend_api.plot_daily_trend()
+    graph_data = search_trend_api.get_result_age(startDate, endDate, timeUnit, device, ages, gender)
+    return graph_data
 
-    buf = BytesIO()
-    fig_1.savefig(buf, format="png")
-    data = base64.b64encode(buf.getbuffer()).decode("ascii")
+    # df = search_trend_api.get_data(startDate, endDate, timeUnit, device, ages, gender)
+    #print(df.head())
+    #fig_1 = search_trend_api.plot_daily_trend()
 
-    return data
+    #buf = BytesIO()
+    #fig_1.savefig(buf, format="png")
+    #data = base64.b64encode(buf.getbuffer()).decode("ascii")
 
-def related_convert(request):
+    #return data
+
+def related_convert(input_value):
     hintKeywords=[]
-    input_value = request.form['input']
     hintKeywords.append(input_value)
 
     related_data = searchRelated.getresults(hintKeywords)

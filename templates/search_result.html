@@ -26,13 +26,25 @@
     </header>
 
     <main> <!-- 검색어 분석 결과 그래프 공간 -->
+      <ul>
+        <li>{{ related_data['1']|safe }}</li>
+        <li>{{ related_data['2']|safe }}</li>
+        <li>{{ related_data['3']|safe }}</li>
+        <li>{{ related_data['4']|safe }}</li>
+        <li>{{ related_data['5']|safe }}</li>
+        <li>{{ related_data['6']|safe }}</li>
+        <li>{{ related_data['7']|safe }}</li>
+        <li>{{ related_data['8']|safe }}</li>
+        <li>{{ related_data['9']|safe }}</li>
+        <li>{{ related_data['10']|safe }}</li>
+      </ul>
       <div class="search_result">
         <h2>검색어 분석 결과</h2>
         <div class="graphs">
-          <div id="result_graph">{{ result|safe }}</div>
-          <div id="result_graph">{{ result|safe }}</div>
-          <div id="result_graph">{{ result|safe }}</div>
-          <div id="result_graph">{{ result|safe }}</div>
+          <div id="result_graph">{{ trend_data|safe }}</div>
+          <div id="result_graph">{{ trend_data|safe }}</div>
+          <div id="result_graph">{{ trend_data|safe }}</div>
+          <div id="result_graph">{{ trend_data|safe }}</div>
         </div>
       </div>
     </main>

@@ -1,9 +1,9 @@
-import base64
 from io import BytesIO
-from matplotlib.figure import Figure
+import base64
+import pandas as pd
 
 from define import const
-from api import searchTrend
+from api import searchTrend, searchRelated
 
 def trend_convert():
     keyword_group_set = {
@@ -44,3 +44,28 @@ def trend_convert():
     data = base64.b64encode(buf.getbuffer()).decode("ascii")
 
     return data
+
+def related_convert(request):
+    hintKeywords=[]
+    input_value = request.form['input']
+    hintKeywords.append(input_value)
+
+    related_data = searchRelated.getresults(hintKeywords)
+    related_data['monthlyPcQcCnt'] = pd.to_numeric(related_data['monthlyPcQcCnt'], errors='coerce')
+    top_10_df = related_data.sort_values(by='monthlyPcQcCnt', ascending=False).head(10)
+    result = top_10_df['relKeyword'].to_string(index=False, header=False)
+    result_list = result.split('\n')
+    result_dict = {
+        '1': result_list[0].strip(),
+        '2': result_list[1].strip(),
+        '3': result_list[2].strip(),
+        '4': result_list[3].strip(),
+        '5': result_list[4].strip(),
+        '6': result_list[5].strip(),
+        '7': result_list[6].strip(),
+        '8': result_list[7].strip(),
+        '9': result_list[8].strip(),
+        '10': result_list[9].strip(),
+    }
+
+    return result_dict

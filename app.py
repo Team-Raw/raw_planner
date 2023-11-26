@@ -21,30 +21,16 @@ def search():
 @app.route('/search_result',methods=('GET', 'POST'))
 def result():
     if request.method == 'POST':
-        # hintKeywords=[]
-        # input_value = request.form['input']
-        # hintKeywords.append(input_value)
-        # result = searchRelated.getresults(hintKeywords)
-        # print(result)
-        data = convert.trend_convert()
-        return render_template('search_result.html', result=f"<img src='data:image/png;base64,{data}'/>")
+        related_data = convert.related_convert(request)
+        print('##################################################################')
+        print(type(related_data))
+        print(related_data)
+        trend_data = convert.trend_convert()
+        return render_template('search_result.html', related_data=related_data, trend_data=f"<img src='data:image/png;base64,{trend_data}'/>")
     return render_template('search_result.html')
 
-# API
-@app.route('/search/trend',methods=('GET', 'POST'))
-def search_trend():
-    searchTrend.search_data()
-    return render_template('search.html')
-
-@app.route('/search/related',methods=('GET', 'POST'))
-def search_relative():
-    hintKeywords=['강원도풀빌라']
-    result = searchRelated.getresults(hintKeywords)
-    return render_template('search.html', result=result)
-
-
-
 #########################################################TEST CODE##################################################################
+
 from matplotlib import pyplot as plt
 import numpy as np
 
@@ -57,13 +43,6 @@ def test_render():
     plt.show()
 
     return render_template('temp/test.html', result=result)
-
-@app.route('/trend_test',methods=('GET', 'POST'))
-def index_test():
-    data = convert.trend_convert()
-
-    return render_template('temp/index_test.html', result=f"<img src='data:image/png;base64,{data}'/>")
-
 
 if __name__=="__main__":
     app.run(debug=True)

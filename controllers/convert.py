@@ -26,8 +26,12 @@ def trend_convert(input_value):
 
     search_trend_api.add_keyword_groups(keyword_group_set['keyword_group_1'])
 
-    graph_data = search_trend_api.get_result_age(startDate, endDate, timeUnit, device, ages, gender)
-    return graph_data
+    # 데이터 요청
+    age_graph_data = search_trend_api.get_result_age(startDate, endDate, timeUnit, device, ages, gender)
+    device_graph_data = search_trend_api.get_result_device(startDate, endDate, timeUnit, device, ages, gender)
+    gender_graph_data = search_trend_api.get_result_gender(startDate, endDate, timeUnit, device, ages, gender)
+
+    return age_graph_data, device_graph_data, gender_graph_data
 
     # df = search_trend_api.get_data(startDate, endDate, timeUnit, device, ages, gender)
     #print(df.head())
@@ -46,19 +50,73 @@ def related_convert(input_value):
     related_data = searchRelated.getresults(hintKeywords)
     related_data['monthlyPcQcCnt'] = pd.to_numeric(related_data['monthlyPcQcCnt'], errors='coerce')
     top_10_df = related_data.sort_values(by='monthlyPcQcCnt', ascending=False).head(10)
-    result = top_10_df['relKeyword'].to_string(index=False, header=False)
-    result_list = result.split('\n')
-    result_dict = {
-        '1': result_list[0].strip(),
-        '2': result_list[1].strip(),
-        '3': result_list[2].strip(),
-        '4': result_list[3].strip(),
-        '5': result_list[4].strip(),
-        '6': result_list[5].strip(),
-        '7': result_list[6].strip(),
-        '8': result_list[7].strip(),
-        '9': result_list[8].strip(),
-        '10': result_list[9].strip(),
+
+    monthlyPcQcCnt = top_10_df['monthlyPcQcCnt'].to_string(index=False, header=False)
+    monthlyPcQcCnt_list = monthlyPcQcCnt.split('\n')
+    monthlyPcQcCnt_dict = {
+        '1': int(float(monthlyPcQcCnt_list[0].strip())),
+        '2': int(float(monthlyPcQcCnt_list[1].strip())),
+        '3': int(float(monthlyPcQcCnt_list[2].strip())),
+        '4': int(float(monthlyPcQcCnt_list[3].strip())),
+        '5': int(float(monthlyPcQcCnt_list[4].strip())),
+        '6': int(float(monthlyPcQcCnt_list[5].strip())),
+        '7': int(float(monthlyPcQcCnt_list[6].strip())),
+        '8': int(float(monthlyPcQcCnt_list[7].strip())),
+        '9': int(float(monthlyPcQcCnt_list[8].strip())),
+        '10': int(float(monthlyPcQcCnt_list[9].strip())),
     }
 
-    return result_dict
+    relKeyword = top_10_df['relKeyword'].to_string(index=False, header=False)
+    relKeyword_list = relKeyword.split('\n')
+    relKeyword_dict = {
+        '1': relKeyword_list[0].strip(),
+        '2': relKeyword_list[1].strip(),
+        '3': relKeyword_list[2].strip(),
+        '4': relKeyword_list[3].strip(),
+        '5': relKeyword_list[4].strip(),
+        '6': relKeyword_list[5].strip(),
+        '7': relKeyword_list[6].strip(),
+        '8': relKeyword_list[7].strip(),
+        '9': relKeyword_list[8].strip(),
+        '10': relKeyword_list[9].strip(),
+    }
+
+    monthlyMobileQcCnt_dict, mo_relKeyword_dict = get_mobile_data(related_data)
+
+    return monthlyPcQcCnt_dict, relKeyword_dict, monthlyMobileQcCnt_dict, mo_relKeyword_dict
+
+def get_mobile_data(related_data):
+    related_data['monthlyMobileQcCnt'] = pd.to_numeric(related_data['monthlyMobileQcCnt'], errors='coerce')
+    top_10_df = related_data.sort_values(by='monthlyMobileQcCnt', ascending=False).head(10)
+
+    monthlyMobileQcCnt = top_10_df['monthlyMobileQcCnt'].to_string(index=False, header=False)
+    monthlyMobileQcCnt_list = monthlyMobileQcCnt.split('\n')
+    monthlyMobileQcCnt_dict = {
+        '1': int(float(monthlyMobileQcCnt_list[0].strip())),
+        '2': int(float(monthlyMobileQcCnt_list[1].strip())),
+        '3': int(float(monthlyMobileQcCnt_list[2].strip())),
+        '4': int(float(monthlyMobileQcCnt_list[3].strip())),
+        '5': int(float(monthlyMobileQcCnt_list[4].strip())),
+        '6': int(float(monthlyMobileQcCnt_list[5].strip())),
+        '7': int(float(monthlyMobileQcCnt_list[6].strip())),
+        '8': int(float(monthlyMobileQcCnt_list[7].strip())),
+        '9': int(float(monthlyMobileQcCnt_list[8].strip())),
+        '10': int(float(monthlyMobileQcCnt_list[9].strip())),
+    }
+
+    mo_relKeyword = top_10_df['relKeyword'].to_string(index=False, header=False)
+    mo_relKeyword_list = mo_relKeyword.split('\n')
+    mo_relKeyword_dict = {
+        '1': mo_relKeyword_list[0].strip(),
+        '2': mo_relKeyword_list[1].strip(),
+        '3': mo_relKeyword_list[2].strip(),
+        '4': mo_relKeyword_list[3].strip(),
+        '5': mo_relKeyword_list[4].strip(),
+        '6': mo_relKeyword_list[5].strip(),
+        '7': mo_relKeyword_list[6].strip(),
+        '8': mo_relKeyword_list[7].strip(),
+        '9': mo_relKeyword_list[8].strip(),
+        '10': mo_relKeyword_list[9].strip(),
+    }
+
+    return monthlyMobileQcCnt_dict, mo_relKeyword_dict

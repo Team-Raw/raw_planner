@@ -27,26 +27,149 @@
 
     <main> <!-- 검색어 분석 결과 그래프 공간 -->
       <div class="graphs_result">
-        <h2>검색어 순위</h2>
+        <h2>연관 검색어 순위</h2>
         <div class="graph_result">
-          <ul>
-            <li>{{ related_data['1']|safe }}</li>
-            <li>{{ related_data['2']|safe }}</li>
-            <li>{{ related_data['3']|safe }}</li>
-            <li>{{ related_data['4']|safe }}</li>
-            <li>{{ related_data['5']|safe }}</li>
-            <li>{{ related_data['6']|safe }}</li>
-            <li>{{ related_data['7']|safe }}</li>
-            <li>{{ related_data['8']|safe }}</li>
-            <li>{{ related_data['9']|safe }}</li>
-            <li>{{ related_data['10']|safe }}</li>
-          </ul>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">연관 검색어 이름</th>
+                <th scope="col">월간 검색량 (PC)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>{{ relKeyword_dict['1']|safe }}</td>
+                <td>{{ monthlyPcQcCnt_dict['1']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>{{ relKeyword_dict['2']|safe }}</td>
+                <td>{{ monthlyPcQcCnt_dict['2']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>{{ relKeyword_dict['3']|safe }}</td>
+                <td>{{ monthlyPcQcCnt_dict['3']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>{{ relKeyword_dict['4']|safe }}</td>
+                <td>{{ monthlyPcQcCnt_dict['4']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">5</th>
+                <td>{{ relKeyword_dict['5']|safe }}</td>
+                <td>{{ monthlyPcQcCnt_dict['5']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">6</th>
+                <td>{{ relKeyword_dict['6']|safe }}</td>
+                <td>{{ monthlyPcQcCnt_dict['6']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">7</th>
+                <td>{{ relKeyword_dict['7']|safe }}</td>
+                <td>{{ monthlyPcQcCnt_dict['7']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">8</th>
+                <td>{{ relKeyword_dict['8']|safe }}</td>
+                <td>{{ monthlyPcQcCnt_dict['8']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">9</th>
+                <td>{{ relKeyword_dict['9']|safe }}</td>
+                <td>{{ monthlyPcQcCnt_dict['9']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">10</th>
+                <td>{{ relKeyword_dict['10']|safe }}</td>
+                <td>{{ monthlyPcQcCnt_dict['10']|safe }}</td>
+              </tr>
+            </tbody>
+          </table>
+          
+        </div>
+        <div class="graph_result">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">연관 검색어 이름</th>
+                <th scope="col">월간 검색량 (MOBILE)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>{{ mo_relKeyword_dict['1']|safe }}</td>
+                <td>{{ monthlyMobileQcCnt_dict['1']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>{{ mo_relKeyword_dict['2']|safe }}</td>
+                <td>{{ monthlyMobileQcCnt_dict['2']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>{{ mo_relKeyword_dict['3']|safe }}</td>
+                <td>{{ monthlyMobileQcCnt_dict['3']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>{{ mo_relKeyword_dict['4']|safe }}</td>
+                <td>{{ monthlyMobileQcCnt_dict['4']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">5</th>
+                <td>{{ mo_relKeyword_dict['5']|safe }}</td>
+                <td>{{ monthlyMobileQcCnt_dict['5']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">6</th>
+                <td>{{ mo_relKeyword_dict['6']|safe }}</td>
+                <td>{{ monthlyMobileQcCnt_dict['6']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">7</th>
+                <td>{{ mo_relKeyword_dict['7']|safe }}</td>
+                <td>{{ monthlyMobileQcCnt_dict['7']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">8</th>
+                <td>{{ mo_relKeyword_dict['8']|safe }}</td>
+                <td>{{ monthlyMobileQcCnt_dict['8']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">9</th>
+                <td>{{ mo_relKeyword_dict['9']|safe }}</td>
+                <td>{{ monthlyMobileQcCnt_dict['9']|safe }}</td>
+              </tr>
+              <tr>
+                <th scope="row">10</th>
+                <td>{{ mo_relKeyword_dict['10']|safe }}</td>
+                <td>{{ monthlyMobileQcCnt_dict['10']|safe }}</td>
+              </tr>
+            </tbody>
+          </table>
+          
         </div>
       </div>
       <div class="search_result">
         <h2>검색어 분석 결과</h2>
-        {% for age, graph_image in trend_data.items() %}
+        <h3>연령대별 분석 결과</h3>
+        {% for age, graph_image in age_graph_data.items() %}
           <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ age }}">
+        {% endfor %}
+        <h3>기기별 분석 결과</h3>
+        {% for device, graph_image in device_graph_data.items() %}
+          <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ device }}">
+        {% endfor %}
+        <h3>성별(남녀) 분석 결과</h3>
+        {% for device, graph_image in gender_graph_data.items() %}
+          <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ gender }}">
         {% endfor %}
         <!-- <div class="graphs">
           <div id="result_graph">{{ trend_data|safe }}</div>

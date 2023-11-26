@@ -9,10 +9,9 @@ app = Flask(__name__)
 def index():
     return render_template('index.html')
 
-# 구현필요
-# @app.route('/service',methods=('GET', 'POST'))
-# def service():
-#     return render_template('service.html')
+@app.route('/service',methods=('GET', 'POST'))
+def service():
+    return render_template('service.html')
 
 @app.route('/search',methods=('GET', 'POST'))
 def search():

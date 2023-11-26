@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>검색결과 페이지</title>
+  <title>Trendy</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/search_result.css') }}">
@@ -13,14 +13,14 @@
   <div class="wrap">
     <header>
       <div class="header_center">
-        <h1 class="header_logo"><a href="#">Trendy</a></h1>
+        <h1 class="header_logo"><a href="/">Trendy</a></h1>
         <div class="header_search">
           <button id="search_btn" class="search_btn"></button>
           <input id="search_data" type="text" placeholder="">
         </div>
         <ul class="header_menu">
-          <li><a href="#">서비스 소개</a></li>
-          <li><a href="#">데이터 검색</a></li>
+          <li><a href="/service">서비스 소개</a></li>
+          <li><a href="/search">데이터 검색</a></li>
         </ul>
       </div>
     </header>

@@ -133,22 +133,23 @@ main {
 }
 
 .typewriter {
-  width: 290px;
+  width: 480px;
   font-weight: 500; font-size: 50px;
   color: #FF5E17;
   overflow: hidden; 
   border-right: 3px solid #eee; /* The typwriter cursor */
-  margin: 10px auto 0; /* Gives that scrolling effect as the typing happens */
+  margin: 10px auto 0; 
+  /* Gives that scrolling effect as the typing happens */
   /* letter-spacing: .1em; Adjust as needed */
   animation: 
-    typing 2.5s steps(10, end),
-    blink-caret .5s step-end infinite;
+    typing 5s steps(16, end),
+    blink-caret .7s step-end infinite;
 }
 
 /* The typing effect */
 @keyframes typing {
   from { width: 0 }
-  to { width: 40% }
+  to { width: 60% }
 }
 
 /* The typewriter cursor effect */

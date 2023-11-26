@@ -89,7 +89,7 @@ main {
 .logo_search_center {
   width: 800px; height: 300px;
   margin: 100px auto 0;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 
 /* .main_logo {
@@ -133,22 +133,23 @@ main {
 }
 
 .typewriter {
-  width: 400px;
+  width: 480px;
   font-weight: 500; font-size: 50px;
   color: #FF5E17;
   overflow: hidden; 
   border-right: 3px solid #eee; /* The typwriter cursor */
-  margin: 10px auto 0; /* Gives that scrolling effect as the typing happens */
+  margin: 10px auto 0; 
+  /* Gives that scrolling effect as the typing happens */
   /* letter-spacing: .1em; Adjust as needed */
   animation: 
-    typing 7s steps(15, end),
+    typing 5s steps(16, end),
     blink-caret .7s step-end infinite;
 }
 
 /* The typing effect */
 @keyframes typing {
   from { width: 0 }
-  to { width: 40% }
+  to { width: 60% }
 }
 
 /* The typewriter cursor effect */

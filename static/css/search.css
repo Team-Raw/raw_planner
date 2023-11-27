@@ -20,7 +20,7 @@ li {
 /* 검색창 페이지 */
 
 .wrap {
-  width: 1500px; height: 700px;
+  width: 100%; height: 700px;
   /* border: 1px solid red; */
   margin: 0 auto;
 } 

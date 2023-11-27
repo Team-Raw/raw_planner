@@ -24,7 +24,7 @@ li {
 /* 서비스 소개 */
 
 .wrap {
-  width: 100%; height: 2000px;
+  width: 100%; height: 1650px;
   /* border: 1px solid red; */
   margin: 0 auto;
 }
@@ -73,18 +73,18 @@ main {
 }
 
 .service_page {
-  width: 100%; height: 700px;
+  width: 100%; height: 1400px;
   margin: 0 auto;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
-.service_page > div {
+.intro {
   width: 100%; height: 400px;
   background: url(../images/collaborative-coding-tips.jpg) no-repeat center;
   background-size: cover;
 }
 
-.service_page > div::after {
+.intro::after {
   content: "";
   position: absolute;
   top: 100px; left: 0px;
@@ -94,25 +94,25 @@ main {
   z-index: 1;
 }
 
-.service_page > div h2,h3,p {
+.intro > h2,h3,p {
   position: absolute;
   top: 100px; left: 110px;
-  padding-top: 70px;
+  padding-top: 100px;
   z-index: 10;
 }
 
-.service_page h2 {
+.intro h2 {
   color: #FF5E17;
   font-weight: 500;
   font-size: 40px;
 }
 
-.service_page h3:nth-of-type(1) {
+.intro h3:nth-of-type(1) {
   margin-top: 70px;
   color: #fff;
 }
 
-.service_page h3:nth-of-type(2) {
+.intro h3:nth-of-type(2) {
   margin-top: 110px;
   color: #fff;
 }
@@ -127,4 +127,117 @@ main {
 .service_page p {
   margin-top: 180px;
   color: #fff;
+}
+
+.contents {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  width: 100%; height: 1000px;
+  padding: 100px 110px 0 110px;
+  /* border: 1px solid #000; */
+}
+
+.contents > div:nth-of-type(1) {
+  padding: 50px 0 0 30px;
+  border: none;
+}
+
+.contents > div {
+  width: 500px; height: 300px;
+  border: 2px solid #FF5E17;
+  border-radius: 25px;
+}
+
+.contents .search {
+  color: #ccc;
+  font-weight: 400;
+  font-size: 35px;
+}
+
+.contents .empha {
+  color: #FF5E17;
+  font-weight: 400;
+  font-size: 35px;
+}
+
+.contents > div:nth-of-type(2) {
+  width: 600px;
+  background: url(../images/trend_word.png) no-repeat center;
+  background-size: contain;
+  border: 2px solid #ccc;
+}
+
+.words {
+  font-size: 20px;
+  color: #7c7777;
+}
+
+.contents > div:nth-of-type(3) {
+  width: 600px;
+  background: url(../images/trend_data.png) no-repeat center;
+  background-size: contain;
+  border: 2px solid #ccc;
+}
+
+.contents > div:nth-of-type(4) {
+  padding: 50px 0 0 30px;
+  border: none;
+}
+
+footer {
+  position: relative;
+  /* bottom: 0; left: 0; */
+  width: 100%; height: 150px;
+  background-color: rgba(236, 233, 233, 0.5);
+  /* border: 1px solid red; */
+}
+
+.footer_center {
+  width: 1300px; height: 100%;
+  text-align: center;
+  margin: 0 auto;
+  /* border: 1px solid red; */
+}
+
+.footer_logo {
+  position: absolute;
+  top: 0; left: 50%;
+  transform: translateX(-50%);
+  padding-top: 6px;
+  margin-bottom: 5px;
+}
+
+.footer_logo > a {
+  display: block;
+  width: 200px;
+  font-size: 25px;
+  margin: 0 auto;
+  color: #FF5E17;
+  font-weight: bold;
+  /* border: 1px solid red; */
+}
+
+.footer_p {
+  position: absolute;
+  top: -40px; left: 50%;
+  transform: translateX(-50%);
+  /* border: 1px solid red; */
+}
+
+.footer_hublogo {
+  position: absolute;
+  bottom: 5px; left: 50%;
+  transform: translateX(-50%);
+  width: 80px; height: 50px;
+  /* border: 1px solid red; */
+  margin: 7px auto 0;
+}
+
+.footer_hublogo > a {
+  display: block;
+  width: 100%; height: 100%;
+  background: url(../images/GitHub-logo.png) no-repeat center;
+  background-size: contain;
 }

@@ -1,6 +1,5 @@
-console.log("conn")
 $('#search_btn').click(function(){
-  console.log('ok')
+  showLoadingModal();
   $.ajax({
     url: '/search_result',
     data: {
@@ -16,7 +15,19 @@ $('#search_btn').click(function(){
       alert('ajax 통신 실패');		
     },
     complete: function(){
-      console.log('api 호출 완료');
+      hideLoadingModal();
+      console.log('검색 조회 완료');
     }
   });
 });
+
+
+function showLoadingModal() {
+  // 모달을 보이게 하는 부분
+  document.getElementById('loading-modal').style.display = 'flex';
+}
+
+function hideLoadingModal() {
+  // 모달을 숨기는 부분
+  document.getElementById('loading-modal').style.display = 'none';
+}

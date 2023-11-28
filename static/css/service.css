@@ -42,7 +42,7 @@ header {
 
   width: 1300px;
   margin: 0 auto;
-  padding-top: 30px;
+  padding-top: 20px;
   /* border: 1px solid red; */
 }
 
@@ -54,6 +54,8 @@ header {
 
 .header_menu {
   display: flex;
+  margin-bottom: -10px;
+  font-weight: bold;
 }
 
 .header_menu a {
@@ -64,8 +66,9 @@ header {
 }
 
 .header_menu a:hover {
-  color: black;
-  background-color: rgba(236, 233, 233, 0.5);
+  color: white;
+  background-color: #FF5E17;
+  border-radius: 5px;
 }
 
 main {

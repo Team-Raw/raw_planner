@@ -1,16 +1,39 @@
+function getCurrentDate() {
+  const today = new Date();
+  const year = today.getFullYear() - 1; // 1년 전
+  const month = (today.getMonth() + 1).toString().padStart(2, '0');
+  const day = (today.getDate() - 1).toString().padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+function getLastDate() {
+  const endDate = new Date();
+  endDate.setDate(endDate.getDate() - 1); // 오늘보다 하루 전
+  const endYear = endDate.getFullYear();
+  const endMonth = (endDate.getMonth() + 1).toString().padStart(2, '0');
+  const endDay = endDate.getDate().toString().padStart(2, '0');
+  return `${endYear}-${endMonth}-${endDay}`;
+}
+
+document.getElementById('start_date').value = getCurrentDate();
+document.getElementById('end_date').value = getLastDate();
+
 $('#search_btn').click(function(e){
   if(check_text() == true){
-    console.log(check_date())
-    // search_data(e)
+    if(check_date() == true){
+      search_data(e)
+    }
   }
 });
 
 document.querySelector('#search_data').addEventListener('keyup', (e)=>{
   if (e.keyCode === 13) {
     if(check_text() == true){
-      search_data(e)
+      if(check_date() == true){
+        search_data(e)
+      }
     }
-  }  
+  }
 });
 
 function check_date() {
@@ -33,7 +56,7 @@ function check_date() {
 
   const oneYearInMillis = 365 * 24 * 60 * 60 * 1000; // milliseconds in a year
   if (end_date - start_date < oneYearInMillis) {
-    alert('시작 날짜와 마지막 날짜는 최소 1년 이상 차이가 나야 합니다. 다시 입력해주세요.');
+    alert('기간은 최소 1년 이상 차이가 나야 합니다. 다시 입력해주세요.');
     return false;
   }
 
@@ -51,8 +74,8 @@ function search_data(e){
     url: '/search_result',
     data: {
       input : $('#search_data').val(),
-      startDate : $(".from_date")[0].value,
-      endDate : $(".to_date")[0].value
+      start_date : $("#start_date").val(),
+      end_date : $("#end_date").val(),
     },
     type: 'post',
     success: function(result){

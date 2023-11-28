@@ -29,7 +29,10 @@ h3{
 
 
 /* 검색결과 페이지 */
-
+.search_date{
+  color: red;
+  font-weight: bold;
+}
 .color_main{
   color: #FF5E17;
 }

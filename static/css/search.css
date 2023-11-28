@@ -117,7 +117,7 @@ main {
   border: 2px solid #FF5E17;
 }
 
-.header_search > input {
+.header_search > input[type=text] {
   width: 520px; height: 38px;
   margin-top: 3px;
   border: none;

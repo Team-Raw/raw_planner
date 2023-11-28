@@ -4,7 +4,7 @@ import pandas as pd
 from define import const
 from api import searchTrend, searchRelated
 
-def trend_convert(input_value):
+def trend_convert(input_value, start_date, end_date):
     keyword_group_set = {
         'keyword_group_1': {'groupName': input_value, 'keywords': [input_value]},
     }
@@ -14,8 +14,8 @@ def trend_convert(input_value):
     client_secret = const.SEARCH_API_CLIENT_SECRET
 
     # 요청 파라미터 설정
-    startDate = "2023-01-01"
-    endDate = "2023-11-25"
+    startDate = start_date
+    endDate = end_date
     timeUnit = 'month'
     device = ''
     ages = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11']

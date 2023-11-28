@@ -22,7 +22,7 @@ def search():
 def result():
     if request.method == 'POST':
         monthlyPcQcCnt_dict, relKeyword_dict, monthlyMobileQcCnt_dict, mo_relKeyword_dict = convert.related_convert(request.form['input'])
-        age_graph_data, device_graph_data, gender_graph_data = convert.trend_convert(request.form['input'])
+        age_graph_data, device_graph_data, gender_graph_data = convert.trend_convert(request.form['input'], request.form['startDate'], request.form['endDate'])
         return render_template('search_result.html', monthlyPcQcCnt_dict=monthlyPcQcCnt_dict, 
                                 relKeyword_dict=relKeyword_dict, 
                                 monthlyMobileQcCnt_dict=monthlyMobileQcCnt_dict, 

@@ -42,7 +42,7 @@ header {
 
   width: 1300px;
   margin: 0 auto;
-  padding-top: 30px;
+  padding-top: 20px;
   /* border: 1px solid red; */
 }
 
@@ -54,6 +54,7 @@ header {
 
 .header_menu {
   display: flex;
+  margin-bottom: -10px;
 }
 
 .header_menu a {

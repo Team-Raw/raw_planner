@@ -18,12 +18,28 @@ li {
   list-style: none;
 }
 input:focus {outline: none;}
+table{text-align: center;}
+h2{
+  font-weight: bold;
+  color: black !important;
+}
+h3{
+  font-size: 24px;
+}
 
 
 /* 검색결과 페이지 */
 
+.color_main{
+  color: #FF5E17;
+}
+.img_container{
+  width: 900px;
+  margin: auto;
+}
+
 .wrap {
-  width: 100%; height: 4500px;
+  width: 100%; height: 3200px;
   /* border: 1px solid red; */
   margin: 0 auto;
 }
@@ -81,6 +97,7 @@ header {
 .header_menu {
   display: flex;
   margin-bottom: -10px;
+  font-weight: bold;
 }
 
 .header_menu a {
@@ -91,12 +108,13 @@ header {
 }
 
 .header_menu a:hover {
-  color: black;
-  background-color: rgba(236, 233, 233, 0.5);
+  color: white;
+  background-color: #FF5E17;
+  border-radius: 5px;
 }
 
 main {
-  width: 100%; height: 4300px;
+  width: 100%; height: 3200px;
   /* border: 1px solid blue; */
 }
 

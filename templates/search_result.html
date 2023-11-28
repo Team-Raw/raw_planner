@@ -49,7 +49,9 @@
 
     <main> <!-- 검색어 분석 결과 그래프 공간 -->
       <div class="graphs_result">
-        <h2>연관 검색어 순위</h2>
+        <h2 class="color_main">"{{data}}"의 연관 검색어 순위</h2>
+        <br>
+        <h3 class="color_main">(PC 기준)</h3>
         <div class="graph_result">
           <table class="table">
             <thead>
@@ -114,6 +116,8 @@
           </table>
           
         </div>
+        <br>
+        <h3 class="color_main">(MOBILE 기준)</h3>
         <div class="graph_result">
           <table class="table">
             <thead>
@@ -180,21 +184,25 @@
         </div>
       </div>
       <div class="search_result">
-        <h2>검색어 분석 결과</h2><br>
-        <h3><연령대별 분석 결과></h3>
-        {% for age, graph_image in age_graph_data.items() %}
-          <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ age }}">
-        {% endfor %}
+        <h2 class="color_main">검색어 분석 결과</h2><br>
+        <h3 class="color_main"><연령대별 분석 결과></h3>
+        <div class="img_container">
+          <img src="data:image/png;base64, {{ age_graph_data }}" width="1100" height="600" alt="{{ age }}">
+        </div>
         <br><br>
-        <h3><기기별 분석 결과></h3>
+        <h3 class="color_main"><기기별 분석 결과></h3>
+        <div class="img_container">
         {% for device, graph_image in device_graph_data.items() %}
           <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ device }}">
         {% endfor %}
+        </div>
         <br><br>
-        <h3><성별(남녀) 분석 결과></h3>
+        <h3 class="color_main"><성별(남녀) 분석 결과></h3>
+        <div class="img_container">
         {% for device, graph_image in gender_graph_data.items() %}
           <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ gender }}">
         {% endfor %}
+        </div>
         <!-- <div class="graphs">
           <div id="result_graph">{{ trend_data|safe }}</div>
           <div id="result_graph">{{ trend_data|safe }}</div>

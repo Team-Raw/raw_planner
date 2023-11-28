@@ -29,7 +29,8 @@ def result():
                                 mo_relKeyword_dict=mo_relKeyword_dict,
                                 age_graph_data=age_graph_data, 
                                 device_graph_data=device_graph_data, 
-                                gender_graph_data=gender_graph_data)
+                                gender_graph_data=gender_graph_data,
+                                data=request.form['input'])
     return render_template('search_result.html')
 
 api = Api(app, version='1.0', title='Trendy API 문서', description='API Documentation', doc="/api-docs")
@@ -40,7 +41,7 @@ search_api = api.namespace('/', description='페이지 조회 요청 API')
 class Index(Resource):
     def get(self):
         """메인페이지 요청"""
-        return {'message': 'This is a test endpoint', 'parameters':'dd'}
+        return {'message': 'This is a test endpoint'}
     
 @search_api.route('/service')
 class Service(Resource):

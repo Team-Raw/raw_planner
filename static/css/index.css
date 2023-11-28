@@ -58,6 +58,7 @@ a:hover{
 .header_menu {
   display: flex;
   margin-bottom: -10px;
+  font-weight: bold;
 }
 
 .header_menu a {
@@ -68,8 +69,9 @@ a:hover{
 }
 
 .header_menu a:hover {
-  color: black;
-  background-color: rgba(236, 233, 233, 0.5)
+  color: white;
+  background-color: #FF5E17;
+  border-radius: 5px;
 }
 
 main > div {

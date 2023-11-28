@@ -73,16 +73,36 @@ header {
 .header_search {
   display: flex;
 
-  width: 600px; height: 45px;
+  width: 500px; height: 45px;
   margin: 0 auto;
   border-radius: 20px;
   border: 2px solid #FF5E17;
+  margin-left: 15px;
 }
 
 .header_search > input {
-  width: 520px; height: 38px;
+  width: 380px; height: 38px;
   margin-top: 3px;
+  margin-left: 10px;
   border: none;
+}
+
+#start_date {
+  width: 170px; height: 38px;
+  border: 2px solid #ccc;
+  color: #FF5E17; font-weight: bold;
+  border-radius: 25px;
+  padding: 10px;
+  margin-left: 10px;
+}
+
+#end_date {
+  width: 170px; height: 38px;
+  border: 2px solid #ccc;
+  color: #FF5E17; font-weight: bold;
+  border-radius: 25px;
+  padding: 10px;
+  margin-left: 10px;
 }
 
 .search_btn {

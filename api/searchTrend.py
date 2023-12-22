@@ -2,7 +2,6 @@ import pandas as pd
 import numpy as np
 
 import matplotlib.pyplot as plt
-import plotly.express as px
 import seaborn as sns
 
 import urllib.request
@@ -98,24 +97,25 @@ class NaverDataLabOpenAPI():
             response_results_all = pd.concat([response_results_all,response_results])
             
         #title별로 그래프를 그리기 위한부분
-        titles=response_results['title'].unique() 
+        titles = response_results_all['title'].unique()
 
-        graph_data = {}
+        buf = BytesIO()
+        plt.figure(figsize=(10, 6))  # 가로 10, 세로 6의 크기로 그림 생성
+
         for age in ages:
-            buf = BytesIO()
-            plt.figure(figsize=(4,4))
             for title in titles:
-                data=response_results_all.loc[(response_results_all['title']==title) 
-                            & (response_results_all['age']==age),:]
-                plt.plot(data['period'],data['ratio'],label=title)
-                plt.xticks(rotation=90)
-                plt.ylabel("검색량")
-                plt.legend()
-            plt.title(str(age_conv[age]))
-            plt.subplots_adjust(left=0.2, right=0.9, top=0.9, bottom=0.3)  # 잘 맞게 조절
-            plt.savefig(buf, format="png")
-            graph_data[age] = base64.b64encode(buf.getbuffer()).decode("ascii")
-        
+                data = response_results_all.loc[(response_results_all['title'] == title)
+                                                & (response_results_all['age'] == age), :]
+                plt.plot(data['period'], data['ratio'], label=f"{age_conv[age]}")
+
+        plt.xticks(rotation=90)
+        plt.ylabel("검색량")
+        plt.legend(bbox_to_anchor=(1,1))
+        plt.title("연령대별 검색량 추이")
+        plt.subplots_adjust(left=0.1, right=0.7, top=0.9, bottom=0.3)  # 잘 맞게 조절
+        plt.savefig(buf, format="png")
+        graph_data = base64.b64encode(buf.getbuffer()).decode("ascii")
+
         return graph_data
     
     # 기기별 그래프
@@ -159,7 +159,7 @@ class NaverDataLabOpenAPI():
             for title in titles:
                 data=response_results_all.loc[(response_results_all['title']==title) 
                             & (response_results_all['device']==device),:]
-                plt.plot(data['period'],data['ratio'],label=title)
+                plt.bar(data['period'],data['ratio'],label=title, color='orange')
                 plt.xticks(rotation=90)
                 plt.ylabel("검색량")
                 plt.legend()
@@ -214,7 +214,7 @@ class NaverDataLabOpenAPI():
             for title in titles:
                 data=response_results_all.loc[(response_results_all['title']==title) 
                             & (response_results_all['gender']==gender),:]
-                plt.plot(data['period'],data['ratio'],label=title)
+                plt.bar(data['period'],data['ratio'],label=title, color='salmon')
                 plt.xticks(rotation=90)
                 plt.ylabel("검색량")
                 plt.legend()

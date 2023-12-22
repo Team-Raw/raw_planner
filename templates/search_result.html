@@ -8,6 +8,28 @@
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/search_result.css') }}">
   <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <style>
+    /* Styles for the modal */
+    #loading-modal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    #loading-icon {
+        color: white;
+        font-size: 2em;
+    }
+</style>
 </head>
 <body>
   <div class="wrap">
@@ -16,8 +38,10 @@
         <h1 class="header_logo"><a href="/">Trendy</a></h1>
         <div class="header_search">
           <button id="search_btn" class="search_btn"></button>
-          <input id="search_data" type="text" placeholder="">
+          <input id="search_data" type="text" placeholder="" required>
         </div>
+        <input type="date" id="start_date">
+        <input type="date" id="end_date">
         <ul class="header_menu">
           <li><a href="/service">서비스 소개</a></li>
           <li><a href="/search">데이터 검색</a></li>
@@ -27,7 +51,10 @@
 
     <main> <!-- 검색어 분석 결과 그래프 공간 -->
       <div class="graphs_result">
-        <h2>연관 검색어 순위</h2>
+        <h2 class="color_main">"{{data}}"의 연관 검색어 순위</h2>
+        <p class="search_date">* 조회날짜 : "{{start_date}} ~ {{end_date}}"</p>
+        <br>
+        <h3 class="color_main">(PC 기준)</h3>
         <div class="graph_result">
           <table class="table">
             <thead>
@@ -92,6 +119,8 @@
           </table>
           
         </div>
+        <br>
+        <h3 class="color_main">(MOBILE 기준)</h3>
         <div class="graph_result">
           <table class="table">
             <thead>
@@ -157,22 +186,27 @@
           
         </div>
       </div>
+      <hr>
       <div class="search_result">
-        <h2>검색어 분석 결과</h2><br>
-        <h3><연령대별 분석 결과></h3>
-        {% for age, graph_image in age_graph_data.items() %}
-          <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ age }}">
-        {% endfor %}
+        <h2 class="color_main">검색어 분석 결과</h2><br>
+        <h3 class="color_main"><연령대별 분석 결과></h3>
+        <div class="img_container">
+          <img src="data:image/png;base64, {{ age_graph_data }}" width="1100" height="600" alt="{{ age }}">
+        </div>
         <br><br>
-        <h3><기기별 분석 결과></h3>
+        <h3 class="color_main"><기기별 분석 결과></h3>
+        <div class="img_container">
         {% for device, graph_image in device_graph_data.items() %}
           <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ device }}">
         {% endfor %}
+        </div>
         <br><br>
-        <h3><성별(남녀) 분석 결과></h3>
+        <h3 class="color_main"><성별(남녀) 분석 결과></h3>
+        <div class="img_container">
         {% for device, graph_image in gender_graph_data.items() %}
           <img src="data:image/png;base64, {{ graph_image }}" width="400" height="400" alt="{{ gender }}">
         {% endfor %}
+        </div>
         <!-- <div class="graphs">
           <div id="result_graph">{{ trend_data|safe }}</div>
           <div id="result_graph">{{ trend_data|safe }}</div>
@@ -181,6 +215,13 @@
         </div> -->
       </div>
     </main>
+    <!-- Loading Modal -->
+    <div id="loading-modal">
+      <div id="loading-icon">
+          <!-- Loading icon using Font Awesome -->
+          <i class="fas fa-spinner fa-spin"></i>
+      </div>
+    </div>
 
     <footer>
       <div class="footer_center">

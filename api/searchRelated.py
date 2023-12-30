@@ -1,11 +1,5 @@
-import os
-import sys
-import urllib.request
-import json
 import pandas as pd
-import matplotlib.pyplot as plt
 import time
-import random
 import requests
 
 import hashlib
@@ -33,13 +27,11 @@ def get_header(method, uri, api_key, secret_key, customer_id):
     return {'Content-Type': 'application/json; charset=UTF-8', 'X-Timestamp': timestamp, 
             'X-API-KEY': api_key, 'X-Customer': str(customer_id), 'X-Signature': signature}
 
-
 def getresults(hintKeywords):
     uri = '/keywordstool'
     method = 'GET'
 
     params={}
-
     params['hintKeywords']=hintKeywords
     params['showDetail']='1'
 

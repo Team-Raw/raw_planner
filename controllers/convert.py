@@ -27,21 +27,11 @@ def trend_convert(input_value, start_date, end_date):
     search_trend_api.add_keyword_groups(keyword_group_set['keyword_group_1'])
 
     # 데이터 요청
-    age_graph_data = search_trend_api.get_result_age(startDate, endDate, timeUnit, device, ages, gender)
-    device_graph_data = search_trend_api.get_result_device(startDate, endDate, timeUnit, device, ages, gender)
-    gender_graph_data = search_trend_api.get_result_gender(startDate, endDate, timeUnit, device, ages, gender)
+    age_graph_data = search_trend_api.get_age_graph(startDate, endDate, timeUnit, device, ages, gender)
+    device_graph_data = search_trend_api.get_device_graph(startDate, endDate, timeUnit, device, ages, gender)
+    gender_graph_data = search_trend_api.get_gender_graph(startDate, endDate, timeUnit, device, ages, gender)
 
     return age_graph_data, device_graph_data, gender_graph_data
-
-    # df = search_trend_api.get_data(startDate, endDate, timeUnit, device, ages, gender)
-    #print(df.head())
-    #fig_1 = search_trend_api.plot_daily_trend()
-
-    #buf = BytesIO()
-    #fig_1.savefig(buf, format="png")
-    #data = base64.b64encode(buf.getbuffer()).decode("ascii")
-
-    #return data
 
 def related_convert(input_value):
     hintKeywords=[]

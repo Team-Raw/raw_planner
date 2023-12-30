@@ -84,7 +84,7 @@ function search_data(e){
       // $('#output1').text(result);
     },
     error: function(){
-      alert('데이터가 존재하지 않습니다. 다시 입력해주세요.');		
+      alert('데이터가 존재하지 않습니다. 다시 입력해주세요.');
     },
     complete: function(){
       hideLoadingModal();
@@ -94,12 +94,10 @@ function search_data(e){
 }
 
 function showLoadingModal() {
-  // 모달을 보이게 하는 부분
   document.getElementById('loading-modal').style.display = 'flex';
 }
 
 function hideLoadingModal() {
-  // 모달을 숨기는 부분
   document.getElementById('loading-modal').style.display = 'none';
 }
 

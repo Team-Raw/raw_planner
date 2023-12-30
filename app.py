@@ -23,22 +23,26 @@ def result():
     if request.method == 'POST':
         monthlyPcQcCnt_dict, relKeyword_dict, monthlyMobileQcCnt_dict, mo_relKeyword_dict = convert.related_convert(request.form['input'])
         age_graph_data, device_graph_data, gender_graph_data = convert.trend_convert(request.form['input'], request.form['start_date'], request.form['end_date'])
-        return render_template('search_result.html', monthlyPcQcCnt_dict=monthlyPcQcCnt_dict, 
-                                relKeyword_dict=relKeyword_dict, 
-                                monthlyMobileQcCnt_dict=monthlyMobileQcCnt_dict, 
-                                mo_relKeyword_dict=mo_relKeyword_dict,
-                                age_graph_data=age_graph_data, 
-                                device_graph_data=device_graph_data, 
-                                gender_graph_data=gender_graph_data,
-                                data=request.form['input'],
-                                start_date=request.form['start_date'],
-                                end_date=request.form['end_date'],)
+        
+        return render_template('search_result.html'
+                                , monthlyPcQcCnt_dict=monthlyPcQcCnt_dict
+                                , relKeyword_dict=relKeyword_dict
+                                , monthlyMobileQcCnt_dict=monthlyMobileQcCnt_dict
+                                , mo_relKeyword_dict=mo_relKeyword_dict
+                                , age_graph_data=age_graph_data
+                                , device_graph_data=device_graph_data
+                                , gender_graph_data=gender_graph_data
+                                , data=request.form['input']
+                                , start_date=request.form['start_date']
+                                , end_date=request.form['end_date']
+                            )
     return render_template('search_result.html')
+
+""" Docs : Swagger """
 
 api = Api(app, version='1.0', title='Trendy API 문서', description='API Documentation', doc="/api-docs")
 search_api = api.namespace('/', description='페이지 조회 요청 API')
 
-# Define your routes using the @namespace.route decorator
 @search_api.route('/')
 class Index(Resource):
     def get(self):
@@ -69,4 +73,3 @@ class SearchResult(Resource):
 
 if __name__=="__main__":
     app.run(debug=True)
-    # app.run(host="127.0.0.1", port="5000", debug=True)
